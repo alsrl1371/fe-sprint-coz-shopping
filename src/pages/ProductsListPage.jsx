@@ -1,12 +1,10 @@
-import './App.css';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-function App() {
+export default function ProductsListPage() {
   return (
     <>
       <Outlet />
     </>
   );
 }
-
-export default App;
