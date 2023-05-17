@@ -42,7 +42,7 @@ const UlStyle = styled.ul`
   margin-top: 40px;
   justify-content: center;
   width: 100%;
-`; //eslint-disable-line no-unused-vars
+`;
 
 const LiStyle = styled.li`
   margin-left: 52px;

@@ -3,10 +3,9 @@ import { styled } from 'styled-components';
 import Bookmark from './Bookmark';
 
 export default function ProductCard({ product }) {
-  let productType;
-  switch (product.type) {
-    case 'Product':
-      productType = (
+  const productType = (() => {
+    if (product.type === 'Product') {
+      return (
         <div className='flex justify-between text-xl font-bold'>
           <div className='w-40'>{product.title}</div>
           <div>
@@ -17,16 +16,14 @@ export default function ProductCard({ product }) {
           </div>
         </div>
       );
-      break;
-    case 'Category':
-      productType = (
+    } else if (product.type === 'Category') {
+      return (
         <div className='flex justify-between text-xl font-bold'>
           <div># {product.title}</div>
         </div>
       );
-      break;
-    case 'Exhibition':
-      productType = (
+    } else if (product.type === 'Exhibition') {
+      return (
         <div className='text-xl font-bold'>
           <div>{product.title}</div>
           <div>
@@ -34,9 +31,8 @@ export default function ProductCard({ product }) {
           </div>
         </div>
       );
-      break;
-    case 'Brand':
-      productType = (
+    } else if (product.type === 'Brand') {
+      return (
         <div className='flex justify-between text-xl font-bold'>
           <div className='w-40'>{product.brand_name}</div>
           <div>
@@ -47,10 +43,10 @@ export default function ProductCard({ product }) {
           </div>
         </div>
       );
-      break;
-    default:
+    } else {
       return null;
-  }
+    }
+  })();
 
   return (
     <div>
@@ -64,7 +60,7 @@ export default function ProductCard({ product }) {
               ? product.brand_image_url
               : product.image_url
           }
-          alt=''
+          alt='상품 이미지'
         ></ImgStyle>
         {productType}
       </ProductContainer>

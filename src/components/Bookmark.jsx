@@ -3,10 +3,10 @@ import { BsStar } from 'react-icons/bs';
 import { BsStarFill } from 'react-icons/bs';
 
 export default function Bookmark() {
-  const [bookmark, setBookmark] = useState(false);
+  const [bookmark, isCheckBookmark] = useState(false);
 
   const handleBookmark = () => {
-    setBookmark(!bookmark);
+    isCheckBookmark(!bookmark);
   };
   return (
     <div>
