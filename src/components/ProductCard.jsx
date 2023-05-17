@@ -1,8 +1,12 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import Bookmark from './Bookmark';
+import { BsStar } from 'react-icons/bs';
+import { BsStarFill } from 'react-icons/bs';
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, isBookmarked, toggleBookmark }) {
+  if (!product) {
+    return null;
+  }
   const productType = (() => {
     if (product.type === 'Product') {
       return (
@@ -48,11 +52,23 @@ export default function ProductCard({ product }) {
     }
   })();
 
+  const handleBookmarkClick = () => {
+    toggleBookmark(product.id);
+  };
+
   return (
     <div>
       <ProductContainer>
         <BookmarkStyle>
-          <Bookmark />
+          {isBookmarked ? (
+            <BookmarkButton onClick={handleBookmarkClick}>
+              <BookmarkFilled />
+            </BookmarkButton>
+          ) : (
+            <BookmarkButton onClick={handleBookmarkClick}>
+              <BookmarkOutlined />
+            </BookmarkButton>
+          )}
         </BookmarkStyle>
         <ImgStyle
           src={
@@ -61,7 +77,7 @@ export default function ProductCard({ product }) {
               : product.image_url
           }
           alt='상품 이미지'
-        ></ImgStyle>
+        />
         {productType}
       </ProductContainer>
     </div>
@@ -89,3 +105,17 @@ const BookmarkStyle = styled.div`
   left: 235px;
   top: 205px;
 `;
+
+const BookmarkButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+`;
+
+const BookmarkFilled = () => {
+  return <BsStarFill size={24} color='gold' />;
+};
+
+const BookmarkOutlined = () => {
+  return <BsStar size={24} color='gold' />;
+};

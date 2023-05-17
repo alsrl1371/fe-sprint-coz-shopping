@@ -1,28 +1,28 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
-import firebase from '../api/firebase';
 import ProductCard from './ProductCard';
+import { styled } from 'styled-components';
 
-export default function MainProducts() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    firebase
-      .getProductsMain()
-      .then((res) => res.json())
-      .then((json) => {
-        setProducts(json);
-      });
-  }, []);
-
+export default function MainProducts({
+  products,
+  bookmarkedProducts,
+  toggleBookmark,
+}) {
   return (
     <div>
-      <ul className='flex'>
-        {products &&
-          products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-      </ul>
+      <UlStyle>
+        {products.slice(-4).map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            isBookmarked={bookmarkedProducts.includes(product.id)}
+            toggleBookmark={() => toggleBookmark(product.id)}
+          />
+        ))}
+      </UlStyle>
     </div>
   );
 }
+
+const UlStyle = styled.ul`
+  display: flex;
+`;

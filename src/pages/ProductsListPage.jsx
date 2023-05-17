@@ -1,10 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
 
 export default function ProductsListPage() {
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <>ㅎㅇ</>;
 }
