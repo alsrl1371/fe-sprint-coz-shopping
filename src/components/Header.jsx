@@ -39,12 +39,12 @@ export default function Header() {
                 {user && <User user={user} />}
                 {!user && <ButtonStyle onClick={login}>Login</ButtonStyle>}
                 {user && (
-                  <buttonStyle onClick={logout}>
+                  <ButtonStyle onClick={logout}>
                     <FaSignOutAlt
                       className='ml-3 cursor-pointer'
                       size='20'
                     ></FaSignOutAlt>
-                  </buttonStyle>
+                  </ButtonStyle>
                 )}
               </Li>
               <Li>
