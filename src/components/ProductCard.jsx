@@ -1,12 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { BsStar } from 'react-icons/bs';
-import { BsStarFill } from 'react-icons/bs';
+import Modal from './Modal';
+import { BsStarFill, BsStar } from 'react-icons/bs';
+import ToastMessage from './ToastMessage';
+import { toast } from 'react-toastify';
 
-export default function ProductCard({ product, isBookmarked, toggleBookmark }) {
+const ProductCard = ({ product, isBookmarked, toggleBookmark }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBookmarkHovered, setIsBookmarkHovered] = useState(false);
+  const [isBookmarkClicked, setIsBookmarkClicked] = useState(false);
+
+  const handleProductClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleBookmarkClick = () => {
+    if (!isModalOpen) {
+      toggleBookmark(product.id);
+      if (!isBookmarked) {
+        handleBookmarkAdd();
+      } else {
+        handleBookmarkRemove();
+      }
+      setIsBookmarkClicked(!isBookmarked);
+    }
+  };
+
+  const handleBookmarkMouseEnter = () => {
+    setIsBookmarkHovered(true);
+  };
+
+  const handleBookmarkMouseLeave = () => {
+    setIsBookmarkHovered(false);
+  };
+
   if (!product) {
     return null;
   }
+
+  const isBookmarkedStyle =
+    isBookmarked || isBookmarkHovered ? 'bookmarked' : '';
+
   const productType = (() => {
     if (product.type === 'Product') {
       return (
@@ -52,23 +90,66 @@ export default function ProductCard({ product, isBookmarked, toggleBookmark }) {
     }
   })();
 
-  const handleBookmarkClick = () => {
-    toggleBookmark(product.id);
+  const BookmarkButton = styled.button.attrs(({ disabled }) => ({
+    disabled: disabled,
+  }))`
+    background: none;
+    border: none;
+    cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+    transition: transform 0.2s ease-in-out;
+  `;
+
+  const StyledBookmarkFilled = styled(BsStarFill)`
+    transition: transform 0.2s ease-in-out;
+
+    &:active {
+      transform: scale(1.2);
+    }
+
+    ${BookmarkButton}:hover & {
+      transform: translateY(-3px);
+    }
+  `;
+
+  const StyledBookmarkOutlined = styled(BsStar)`
+    transition: transform 0.2s ease-in-out;
+
+    &:active {
+      transform: scale(1.2);
+    }
+
+    ${BookmarkButton}:hover & {
+      transform: translateY(-3px);
+    }
+  `;
+
+  const handleBookmarkAdd = () => {
+    toast.success('북마크가 추가되었습니다!');
+  };
+
+  const handleBookmarkRemove = () => {
+    toast.error('북마크가 해제되었습니다!');
   };
 
   return (
     <div>
       <ProductContainer>
         <BookmarkStyle>
-          {isBookmarked ? (
-            <BookmarkButton onClick={handleBookmarkClick}>
-              <BookmarkFilled />
-            </BookmarkButton>
-          ) : (
-            <BookmarkButton onClick={handleBookmarkClick}>
-              <BookmarkOutlined />
-            </BookmarkButton>
-          )}
+          <BookmarkButton
+            disabled={isModalOpen}
+            onClick={handleBookmarkClick}
+            onMouseEnter={handleBookmarkMouseEnter}
+            onMouseLeave={handleBookmarkMouseLeave}
+            className={`${isBookmarkedStyle} ${
+              isBookmarkClicked ? 'clicked' : ''
+            }`}
+          >
+            {isBookmarked ? (
+              <StyledBookmarkFilled size={24} color='gold' />
+            ) : (
+              <StyledBookmarkOutlined size={24} color='gold' />
+            )}
+          </BookmarkButton>
         </BookmarkStyle>
         <ImgStyle
           src={
@@ -77,12 +158,19 @@ export default function ProductCard({ product, isBookmarked, toggleBookmark }) {
               : product.image_url
           }
           alt='상품 이미지'
+          onClick={handleProductClick}
         />
         {productType}
       </ProductContainer>
+      {isBookmarkClicked && <ToastMessage isBookmarkAdded={!isBookmarked} />}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        product={product}
+      />
     </div>
   );
-}
+};
 
 const ImgStyle = styled.img`
   display: flex;
@@ -106,16 +194,4 @@ const BookmarkStyle = styled.div`
   top: 205px;
 `;
 
-const BookmarkButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
-
-const BookmarkFilled = () => {
-  return <BsStarFill size={24} color='gold' />;
-};
-
-const BookmarkOutlined = () => {
-  return <BsStar size={24} color='gold' />;
-};
+export default ProductCard;

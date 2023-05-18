@@ -2,7 +2,7 @@ import React from 'react';
 import ProductCard from './ProductCard';
 import { styled } from 'styled-components';
 
-export default function Products({
+export default function MainProducts({
   products,
   bookmarkedProducts,
   toggleBookmark,
