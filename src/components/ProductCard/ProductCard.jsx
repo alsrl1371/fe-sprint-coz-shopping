@@ -1,25 +1,28 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import Modal from './Modal';
+import Modal from '../Modal/Modal';
 import { BsStarFill, BsStar } from 'react-icons/bs';
-import ToastMessage from './ToastMessage';
-import { toast } from 'react-toastify';
+import ToastMessage from '../ToastMessage/ToastMessage';
+import useModal from '../../hooks/useModal';
+import useToast from '../../hooks/useToast';
 
 const ProductCard = ({ product, isBookmarked, toggleBookmark }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBookmarkHovered, setIsBookmarkHovered] = useState(false);
   const [isBookmarkClicked, setIsBookmarkClicked] = useState(false);
+  const { isModalOpened, openModal, closeModal } = useModal();
+  const { isBookmarkAdded, handleBookmarkAdd, handleBookmarkRemove } =
+    useToast();
 
   const handleProductClick = () => {
-    setIsModalOpen(true);
+    openModal();
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    closeModal();
   };
 
   const handleBookmarkClick = () => {
-    if (!isModalOpen) {
+    if (!isModalOpened) {
       toggleBookmark(product.id);
       if (!isBookmarked) {
         handleBookmarkAdd();
@@ -123,20 +126,12 @@ const ProductCard = ({ product, isBookmarked, toggleBookmark }) => {
     }
   `;
 
-  const handleBookmarkAdd = () => {
-    toast.success('북마크가 추가되었습니다!');
-  };
-
-  const handleBookmarkRemove = () => {
-    toast.error('북마크가 해제되었습니다!');
-  };
-
   return (
     <div>
       <ProductContainer>
         <BookmarkStyle>
           <BookmarkButton
-            disabled={isModalOpen}
+            disabled={isModalOpened}
             onClick={handleBookmarkClick}
             onMouseEnter={handleBookmarkMouseEnter}
             onMouseLeave={handleBookmarkMouseLeave}
@@ -164,7 +159,7 @@ const ProductCard = ({ product, isBookmarked, toggleBookmark }) => {
       </ProductContainer>
       {isBookmarkClicked && <ToastMessage isBookmarkAdded={!isBookmarked} />}
       <Modal
-        isOpen={isModalOpen}
+        isOpen={isModalOpened}
         onClose={handleCloseModal}
         product={product}
       />

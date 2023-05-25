@@ -1,5 +1,5 @@
-import ProductCard from './ProductCard';
-import { styled } from 'styled-components';
+import ProductCard from '../ProductCard/ProductCard';
+import { UlStyle } from '../../GlobalStyle';
 
 export default function MainProducts({
   products,
@@ -21,7 +21,3 @@ export default function MainProducts({
     </div>
   );
 }
-
-const UlStyle = styled.ul`
-  display: flex;
-`;

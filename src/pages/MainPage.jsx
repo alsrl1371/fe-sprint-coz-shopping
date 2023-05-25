@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import * as firebase from '../api/firebase';
 import { styled } from 'styled-components';
-import MainProducts from '../components/MainProducts';
-import MainBookmark from '../components/MainBookmark';
+import MainProducts from '../components/MainProducts/MainProducts';
+import { MainBookmark } from '../components/MainBookmark/MainBookmark';
 
 export default function MainPage() {
   const [bookmarkedProducts, setBookmarkedProducts] = useState([]);

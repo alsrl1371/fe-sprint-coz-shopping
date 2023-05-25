@@ -1,12 +1,12 @@
 import React from 'react';
-import ProductCard from './ProductCard';
-import { styled } from 'styled-components';
+import ProductCard from '../ProductCard/ProductCard';
+import { UlStyle } from '../../GlobalStyle';
 
-export default function MainBookmark({
+export const MainBookmark = ({
   bookmarkedProducts,
   getProductById,
   toggleBookmark,
-}) {
+}) => {
   return (
     <UlStyle>
       {bookmarkedProducts.slice(-4).map((productId) => (
@@ -19,8 +19,4 @@ export default function MainBookmark({
       ))}
     </UlStyle>
   );
-}
-
-const UlStyle = styled.ul`
-  display: flex;
-`;
+};

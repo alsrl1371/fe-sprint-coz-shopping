@@ -1,12 +1,8 @@
 import React from 'react';
-import ProductCard from './ProductCard';
-import { styled } from 'styled-components';
+import ProductCard from '../ProductCard/ProductCard';
+import { UlStyle } from '../../GlobalStyle';
 
-export default function MainProducts({
-  products,
-  bookmarkedProducts,
-  toggleBookmark,
-}) {
+const Products = ({ products, bookmarkedProducts, toggleBookmark }) => {
   return (
     <div>
       <UlStyle>
@@ -21,8 +17,6 @@ export default function MainProducts({
       </UlStyle>
     </div>
   );
-}
+};
 
-const UlStyle = styled.ul`
-  display: flex;
-`;
+export default Products;

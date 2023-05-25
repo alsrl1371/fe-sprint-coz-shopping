@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../components/ProductCard/ProductCard';
 import { getProductsAll } from '../api/firebase';
 import styled from 'styled-components';
 import { AiOutlineArrowDown } from 'react-icons/ai';
