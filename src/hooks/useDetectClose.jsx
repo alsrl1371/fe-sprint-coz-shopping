@@ -4,6 +4,10 @@ const useDetectClose = (initialState) => {
   const [isOpen, setIsOpen] = useState(initialState);
   const ref = useRef(null);
 
+  const removeHandler = () => {
+    setIsOpen(!isOpen);
+  };
+
   useEffect(() => {
     const onClick = (e) => {
       if (ref.current !== null && !ref.current.contains(e.target)) {
@@ -20,11 +24,7 @@ const useDetectClose = (initialState) => {
     };
   }, [isOpen]);
 
-  const toggleOpen = () => {
-    setIsOpen(!isOpen);
-  };
-
-  return [isOpen, toggleOpen, ref];
+  return [isOpen, ref, removeHandler];
 };
 
 export default useDetectClose;

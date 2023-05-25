@@ -1,11 +1,14 @@
 import './App.css';
-import 'react-toastify/dist/ReactToastify.css';
-import ToastMessage from './components/ToastMessage/ToastMessage';
+import { Outlet } from 'react-router-dom';
+import Footer from './components/Footer';
+import Header from './components/Header';
 
 function App() {
   return (
     <>
-      <ToastMessage />
+      <Header />
+      <Outlet />
+      <Footer />
     </>
   );
 }

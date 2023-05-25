@@ -52,16 +52,21 @@ export async function addNewProduct(product, img) {
   });
 }
 
-export async function getProductsAll() {
-  const res = await fetch(
-    'http://cozshopping.codestates-seb.link/api/v1/products'
-  );
+const getProductsAll = () => {
+  const res = fetch('http://cozshopping.codestates-seb.link/api/v1/products');
   return res;
-}
+};
 
-export async function getProductsMain() {
-  const res = await fetch(
+const getProductsMain = () => {
+  const res = fetch(
     'http://cozshopping.codestates-seb.link/api/v1/products?count=4'
   );
   return res;
-}
+};
+
+const APIs = {
+  getProductsAll,
+  getProductsMain,
+};
+
+export default APIs;

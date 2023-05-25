@@ -1,34 +1,49 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import ProductsListPage from './pages/ProductsListPage';
 import BookmarkPage from './pages/BookmarkPage';
 import NotFound from './pages/NotFound';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+import Products from './components/Products';
 
-ReactDOM.render(
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        index: true,
+        path: '/',
+        element: <MainPage />,
+      },
+      {
+        path: '/products/list',
+        element: <ProductsListPage />,
+        children: [
+          { index: true, path: '/products/list', element: <Products /> },
+        ],
+      },
+      {
+        path: '/bookmark',
+        element: <BookmarkPage />,
+      },
+    ],
+  },
+]);
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Header />
-      <App />
-      <Routes>
-        <Route path='/' element={<MainPage />} />
-        <Route path='/products/list' element={<ProductsListPage />} />
-        <Route path='/bookmark' element={<BookmarkPage />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-      <Footer
-        label='개인정보 처리방침 | 이용 약관'
-        copyright='All rights reserved @ Codestates'
-      />
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
+    <RouterProvider router={router} />
+  </React.StrictMode>
 );
 
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
