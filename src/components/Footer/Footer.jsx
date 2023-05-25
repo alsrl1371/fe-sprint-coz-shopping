@@ -1,14 +1,14 @@
 import React from 'react';
 import { styled } from 'styled-components';
 
-export default function Footer() {
+const Footer = ({ label, copyright }) => {
   return (
     <FooterStyle>
-      <div>개인정보 처리방침 | 이용 약관</div>
-      <div>All rights reserved @ Codestates</div>
+      {label && <div>{label}</div>}
+      {copyright && <div>{copyright}</div>}
     </FooterStyle>
   );
-}
+};
 
 const FooterStyle = styled.div`
   width: 100%;
@@ -26,3 +26,5 @@ const FooterStyle = styled.div`
   color: #888888;
   margin-top: 40px;
 `;
+
+export default Footer;
